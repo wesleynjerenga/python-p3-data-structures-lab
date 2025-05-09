@@ -102,3 +102,45 @@ class TestDataStructures:
             },
         ]
 
+    def test_get_names_empty_list(self):
+        '''get_names should return an empty list when given an empty list.'''
+        assert get_names([]) == []
+
+    def test_get_spiciest_foods_empty_list(self):
+        '''get_spiciest_foods should return an empty list when given an empty list.'''
+        assert get_spiciest_foods([]) == []
+
+    def test_get_spiciest_foods_no_spicy_foods(self):
+        '''get_spiciest_foods should return an empty list when no foods have heat_level > 5.'''
+        foods = [
+            {"name": "Mild Curry", "cuisine": "Indian", "heat_level": 2},
+            {"name": "Sweet Wings", "cuisine": "American", "heat_level": 3},
+        ]
+        assert get_spiciest_foods(foods) == []
+
+    def test_print_spicy_foods_empty_list(self):
+        '''print_spicy_foods should not print anything when given an empty list.'''
+        captured_out = io.StringIO()
+        sys.stdout = captured_out
+        print_spicy_foods([])
+        sys.stdout = sys.__stdout__
+        assert captured_out.getvalue() == ""
+
+    def test_get_spicy_food_by_cuisine_not_found(self):
+        '''get_spicy_food_by_cuisine should return None when no food matches the given cuisine.'''
+        assert get_spicy_food_by_cuisine(TestDataStructures.SPICY_FOODS, "Mexican") is None
+
+    def test_get_average_heat_level_empty_list(self):
+        '''get_average_heat_level should return 0 when given an empty list.'''
+        assert get_average_heat_level([]) == 0
+
+    def test_create_spicy_food_empty_list(self):
+        '''create_spicy_food should return a list with the new food when given an empty list.'''
+        new_food = {"name": "Griot", "cuisine": "Haitian", "heat_level": 10}
+        assert create_spicy_food([], new_food) == [new_food]
+
+    def test_create_spicy_food_duplicate(self):
+        '''create_spicy_food should allow adding duplicate foods to the list.'''
+        new_food = {"name": "Green Curry", "cuisine": "Thai", "heat_level": 9}
+        updated_list = create_spicy_food(TestDataStructures.SPICY_FOODS, new_food)
+        assert updated_list.count(new_food) == 2
